@@ -11,7 +11,7 @@ const FavoriteQuotes = () => {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:3000/api/favourites');
+        const response = await axios.get('http://127.0.0.1:3000/api/get/favourites');
         setQuotes(response.data);
       } catch (error) {
         setError('Error fetching quotes');

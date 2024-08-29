@@ -6,16 +6,43 @@ import axios from "axios";
 
 // Sample quotes data
 const quotes = [
-  { quote: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
-  { quote: "There are only two hard things in computer science: cache invalidation and naming things.", author: "Phil Karlton" },
-  { quote: "Programming is the art of telling another human being what one wants the computer to do.", author: "Donald Knuth" },
-  { quote: "Good code is its own best documentation.", author: "Steve McConnell" },
-  { quote: "The best way to predict the future is to invent it.", author: "Alan Kay" },
-  { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-  { quote: "In theory, theory and practice are the same. In practice, they are not.", author: "Yogi Berra" },
+  {
+    quote: "Code is like humor. When you have to explain it, it’s bad.",
+    author: "Cory House",
+  },
+  {
+    quote:
+      "There are only two hard things in computer science: cache invalidation and naming things.",
+    author: "Phil Karlton",
+  },
+  {
+    quote:
+      "Programming is the art of telling another human being what one wants the computer to do.",
+    author: "Donald Knuth",
+  },
+  {
+    quote: "Good code is its own best documentation.",
+    author: "Steve McConnell",
+  },
+  {
+    quote: "The best way to predict the future is to invent it.",
+    author: "Alan Kay",
+  },
+  {
+    quote: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs",
+  },
+  {
+    quote:
+      "In theory, theory and practice are the same. In practice, they are not.",
+    author: "Yogi Berra",
+  },
   { quote: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
-  { quote: "Software is a great combination between artistry and engineering.", author: "Bill Gates" },
-  { quote: "Talk is cheap. Show me the code.", author: "Linus Torvalds" }
+  {
+    quote: "Software is a great combination between artistry and engineering.",
+    author: "Bill Gates",
+  },
+  { quote: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
 ];
 
 export default function ShowQuotes() {
@@ -27,8 +54,10 @@ export default function ShowQuotes() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/favourites");
-        setFavorites(response.data.map(fav => fav.quote));
+        const response = await axios.get(
+          "http://127.0.0.1:3000/api/get/favourites"
+        );
+        setFavorites(response.data.map((fav) => fav.quote));
       } catch (error) {
         console.error("Error fetching favorites from the server:", error);
       }
@@ -44,16 +73,18 @@ export default function ShowQuotes() {
         try {
           const obj = {
             content: data.quote,
-            author: data.author
+            author: data.author,
           };
 
           if (favorites.includes(data.quote)) {
             // If the quote is already a favorite, remove it
-            await axios.delete(`http://127.0.0.1:3000/api/favourites`, { data: obj });
-            setFavorites(favorites.filter(quote => quote !== data.quote));
+            await axios.delete(`http://127.0.0.1:3000/api/favourites`, {
+              data: obj,
+            });
+            setFavorites(favorites.filter((quote) => quote !== data.quote));
           } else {
             // Otherwise, add it
-            await axios.post("http://127.0.0.1:3000/api/favourites", obj);
+            await axios.post("http://127.0.0.1:3000/api/add/favourites", obj);
             setFavorites([...favorites, data.quote]);
           }
         } catch (error) {
